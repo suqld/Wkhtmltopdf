@@ -19,7 +19,8 @@ class Wkhtmltopdf
     protected $_copies = 1;
     protected $_grayscale = false;
     protected $_title = null;
-    protected $_path;               // path to directory where to place files
+    protected $_path = '/tmp';               // path to directory where to place files
+    protected $_print_media = false;
 
     /**
      * path to executable
@@ -57,6 +58,10 @@ class Wkhtmltopdf
             $this->setHtml($options['html']);
         }
 
+        if (array_key_exists('url', $options)) {
+            $this->setUrl($options['url']);
+        }
+
         if (array_key_exists('orientation', $options)) {
             $this->setOrientation($options['orientation']);
         } else {
@@ -85,8 +90,10 @@ class Wkhtmltopdf
             $this->setTitle($options['title']);
         }
 
-        if (!array_key_exists('path', $options)) {
+        if (!array_key_exists('path', $options) && $this->_path == '') {
             throw new Exception("Path to directory where to store files is not set");
+        } else {
+            $options['path'] = $this->_path;
         }
 
         $this->setPath($options['path']);
@@ -410,6 +417,11 @@ class Wkhtmltopdf
         throw new Exception("Title is not set");
     }
 
+    public function setPrintMedia()
+    {
+        $this->_print_media = true;
+    }
+
     /**
      * returns command to execute
      *
@@ -433,7 +445,9 @@ class Wkhtmltopdf
         if ($this->getUrl()) {
             $command .= ' --load-error-handling ignore';
         }
-        
+        if ($this->_print_media) {
+            $command .= ' --print-media-type';
+        }
         $command .= ' --title "' . $this->getTitle() . '"';
         $command .= ' "%input%"';
         $command .= " -";
