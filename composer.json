@@ -1,0 +1,21 @@
+{
+    "name": "aur1mas/wkhtmltopdf",
+    "type": "library",
+    "description": "A PHP class which helps working with WKHTMLTOPDF",
+    "homepage": "https://github.com/aur1mas/Wkhtmltopdf",
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "aur1mas",
+            "email": "aur1mas@devnet.lt"
+        },
+        {
+            "name": "Charles SANQUER",
+            "email": "charles.sanquer@spyrit.net"
+        }
+    ],
+    "autoload": {
+        "files": ["lib/Wkhtmltopdf.php"]
+    }
+}
+
