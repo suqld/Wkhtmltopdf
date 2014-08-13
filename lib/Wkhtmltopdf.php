@@ -21,7 +21,7 @@ class Wkhtmltopdf
     protected $_copies = 1;
     protected $_grayscale = false;
     protected $_title = null;
-    protected $_path = '/tmp';               // path to directory where to place files
+    protected $_path;               // path to directory where to place files
     protected $_xvfb = false;
     protected $_print_media = false;
     protected $_zoom = 1;
@@ -117,16 +117,14 @@ class Wkhtmltopdf
         }
 
         if (!array_key_exists('path', $options)) {
-            throw new Exception("Path to directory where to store files is not set");
-        } else {
-            $options['path'] = $this->_path;
+            $options['path'] = '/tmp';
         }
 
         if (!is_writable($options['path']))
         {
             throw new Exception("Path to directory where to store files is not writable");
         }
-        
+
         $this->setPath($options['path']);
 
         $this->_createFile();
